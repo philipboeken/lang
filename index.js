@@ -18,6 +18,12 @@ $('script[type="text/x-i18n-json"]').each(function () {
 	lang = $.extend(object, lang);
 });
 
-module.exports = function (entry) {
-	return delve(lang, entry);
+module.exports = function (entry, args) {
+	var s = delve(lang, entry);
+	if (typeof (args) == 'object') {
+		Object.keys(args).forEach(key => {
+			s = s.replace(':' + key, args[key]);
+		})
+	}
+	return s
 };
